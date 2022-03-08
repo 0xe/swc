@@ -189,6 +189,12 @@ impl<'a, 'b, P: swc_ecma_visit::Fold> PassBuilder<'a, 'b, P> {
             let assumptions = self.assumptions;
             Either::Right(chain!(
                 Optional::new(
+                    compat::es_unsupported_features::es_unsupported_features(
+                        compat::es_unsupported_features::Config {}
+                    ),
+                    self.target == EsVersion::EsUnsupported
+                ),
+                Optional::new(
                     compat::es2022::es2022(compat::es2022::Config {
                         class_properties: compat::es2022::class_properties::Config {
                             private_as_properties: assumptions.private_fields_as_properties,

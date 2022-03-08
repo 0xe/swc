@@ -160,6 +160,9 @@ pub enum Feature {
 
     /// `bugfix/transform-safari-id-destructuring-collision-in-function-expression`
     BugfixSafariIdDestructuringCollisionInFunctionExpression,
+
+    /// `proposal-unsupported`
+    Unsupported,
 }
 
 pub(crate) static FEATURES: Lazy<AHashMap<Feature, BrowserData<Option<Version>>>> =

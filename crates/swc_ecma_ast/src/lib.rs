@@ -120,6 +120,8 @@ pub enum EsVersion {
     Es2021,
     #[serde(rename = "es2022")]
     Es2022,
+    #[serde(rename = "es_unsupported_features")]
+    EsUnsupported,
 }
 
 impl EsVersion {
