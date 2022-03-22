@@ -172,6 +172,9 @@ pub enum Feature {
 
     /// `bugfix/transform-v8-spread-parameters-in-optional-chaining`
     BugfixTransformV8SpreadParametersInOptionalChaining, // TODO
+
+    /// `proposal-unsupported`
+    Unsupported,
 }
 
 pub(crate) static FEATURES: Lazy<AHashMap<Feature, BrowserData<Option<Version>>>> =
