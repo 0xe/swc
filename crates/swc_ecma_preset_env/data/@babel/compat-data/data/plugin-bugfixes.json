@@ -1,11 +1,4 @@
 {
-  "proposal-unsupported": {
-    "chrome": "94",
-    "opera": "80",
-    "edge": "94",
-    "firefox": "93",
-    "node": "16.11"
-  },
   "transform-async-to-generator": {
     "chrome": "55",
     "opera": "42",

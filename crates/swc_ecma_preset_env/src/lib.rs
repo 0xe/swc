@@ -74,13 +74,6 @@ where
         }};
     }
 
-    // ESUnsupported
-    let pass = add!(
-        pass,
-        Unsupported,
-        es_unsupported_features::es_unsupported_features(es_unsupported_features::Config {})
-    );
-
     // Bugfixes
     let pass = add!(pass, BugfixEdgeDefaultParam, bugfixes::edge_default_param());
     let pass = add!(

@@ -187,12 +187,13 @@ impl<'a, 'b, P: swc_ecma_visit::Fold> PassBuilder<'a, 'b, P> {
             ))
         } else {
             let assumptions = self.assumptions;
+
             Either::Right(chain!(
                 Optional::new(
                     compat::es_unsupported_features::es_unsupported_features(
                         compat::es_unsupported_features::Config {}
                     ),
-                    self.target == EsVersion::EsUnsupported
+                    self.target == EsVersion::Es5
                 ),
                 Optional::new(
                     compat::es2022::es2022(
