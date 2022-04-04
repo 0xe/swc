@@ -8,7 +8,7 @@ use swc_ecma_transforms_macros::fast_path;
 use swc_ecma_utils::{
     contains_this_expr,
     function::{FnEnvHoister, FnWrapperResult, FunctionWrapper},
-    private_ident, quote_ident, ExprFactory, StmtLike,
+    private_ident, quote_ident, ExprFactory, StmtLike, HANDLER,
 };
 use swc_ecma_visit::{
     as_folder, noop_visit_mut_type, noop_visit_type, Fold, Visit, VisitMut, VisitMutWith, VisitWith,
@@ -158,6 +158,11 @@ impl VisitMut for Actual {
     }
 
     fn visit_mut_fn_decl(&mut self, f: &mut FnDecl) {
+        if f.function.is_async {
+            let error = "Async function is not supported.".to_string();
+            HANDLER.with(|handler| handler.struct_span_err(f.function.span, &error).emit());
+        }
+
         f.visit_mut_children_with(self);
         if !f.function.is_async {
             return;
@@ -283,11 +288,16 @@ impl VisitMut for Actual {
                     ident: None,
                     ref function,
                 }) if function.is_async || function.is_generator => {
+                    let error = format!("Async function expression is not supported.");
+                    HANDLER.with(|handler| handler.struct_span_err(function.span, &error).emit());
+
                     self.visit_mut_expr_with_binding(init, Some(id.clone()));
                     return;
                 }
 
                 Expr::Arrow(arrow_expr) if arrow_expr.is_async || arrow_expr.is_generator => {
+                    let error = format!("Async arrow expression is not supported.");
+                    HANDLER.with(|handler| handler.struct_span_err(arrow_expr.span, &error).emit());
                     self.visit_mut_expr_with_binding(init, Some(id.clone()));
                     return;
                 }
